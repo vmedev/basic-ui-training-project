@@ -102,13 +102,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/", "/login", "/*.html", "/css/**", "/js/**", "/images/**", "/favicon.ico")
                         .permitAll()
-
-                        .requestMatchers(HttpMethod.GET, "/api/animals/adopted").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/animals/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v1/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/animals/adopted").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/animals/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/animals/new").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/animals", "/animals/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/animals/*/adopt").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/animals").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/animals/*/adopt").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/animals").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/animals").hasRole("ADMIN")
 
                         .anyRequest().authenticated()

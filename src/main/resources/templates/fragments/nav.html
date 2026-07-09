@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-    <nav th:fragment="nav">
-        <a th:href="@{/}">Home</a> |
-        <a th:href="@{/animals}">All animals</a> |
-        <a th:href="@{/animals/new}">Add animal</a>
-        <form th:action="@{/logout}" method="post" style="display: inline;">
-            <button type="submit">Log out</button>
-        </form>
-    </nav>
+<nav th:fragment="nav">
+    <a th:href="@{/}">Home</a> |
+    <a th:href="@{/animals}">All animals</a>
+    <span th:if="${isAdmin}">
+            | <a th:href="@{/animals/new}">Add animal</a>
+        </span>
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit">Log out</button>
+    </form>
+</nav>
 </body>
 </html>

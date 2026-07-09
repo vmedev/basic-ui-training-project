@@ -6,6 +6,8 @@ import lv.bootcamp.shelter.dto.AnimalResponse;
 import lv.bootcamp.shelter.form.AnimalForm;
 import lv.bootcamp.shelter.model.AnimalType;
 import lv.bootcamp.shelter.service.AnimalService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +33,10 @@ public class AnimalPageController {
     }
 
     @GetMapping("/animals/new")
-    public String newAnimalForm (Model model) {
+    public String newAnimalForm(Model model) {
+        if (!isAdmin()) {
+            return "redirect:/animals";
+        }
         model.addAttribute("form", new AnimalForm(null, null, null, null, null, null));
         return "animals-new";
     }
@@ -59,6 +64,24 @@ public class AnimalPageController {
         return "redirect:/animals";
     }
 
+    @ModelAttribute("isAdmin")
+    public boolean isAdmin() {
+        return hasRole("ROLE_ADMIN");
+    }
+
+    @ModelAttribute("isUser")
+    public boolean isUser() {
+        return hasRole("ROLE_USER");
+    }
+
+    private boolean hasRole(String role) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals(role));
+    }
 
 
 }

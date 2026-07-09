@@ -94,7 +94,7 @@
     <a th:href="@{/animals}" class="back-link">← Back to list</a>
   </main>
   <script>
-    fetch('/api/animals/types')
+    fetch('/api/v1/animals/types')
             .then(response => response.json())
             .then(types => {
               const select = document.getElementById('type');

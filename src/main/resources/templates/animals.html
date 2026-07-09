@@ -87,13 +87,15 @@
             </strong>
             <span th:text="${animal.status}"
                   th:classappend="${animal.status.name() == 'ADOPTED'} ? 'badge-adopted' : 'badge-available'">STATUS</span>
+            <span th:if="${isAdmin} and ${animal.adoptionNote != null}"
+                  th:text="${animal.adoptionNote}">adoption note</span>
             —
             <span th:text="${animal.type}">Type</span> |
             <span th:text="${animal.breed}">Breed</span> |
             Age: <span th:text="${animal.age}">0</span>
             <p th:text="${animal.description}">Description</p>
             <form th:if="${isUser} and ${animal.status.name() == 'AVAILABLE'}"
-              th:action="@{'/api/animals/' + ${animal.id} + '/adopt'}" method="post">
+                  th:action="@{'/api/v1/animals/' + ${animal.id} + '/adopt'}" method="post">
               <button type="submit">Adopt</button>
             </form>
           </div>
@@ -105,7 +107,7 @@
          ADD ANIMAL FORM — update action + bind fields in Task A
          ADMIN-only: wrap this whole <section> in th:if="${isAdmin}"
          ═══════════════════════════════════════════════════════════ -->
-    <section aria-label="Add new animal">
+    <section aria-label="Add new animal" th:if="${isAdmin}">
       <h2>Add a new animal</h2>
       <form action="/animals" method="post">
 

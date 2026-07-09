@@ -3,6 +3,7 @@ package lv.bootcamp.shelter.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Content;
 import jakarta.validation.Valid;
 import lv.bootcamp.shelter.dto.AnimalCreateRequest;
 import lv.bootcamp.shelter.dto.AnimalResponse;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.List;
 
@@ -20,10 +22,11 @@ import java.util.List;
  * REST controller for shelter animal endpoints.
  * Returns JSON — does not render HTML pages.
  */
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Animals", description = "Manage shelter animals")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/animals")
+@RequestMapping("/api/v1/animals")
 public class AnimalApiController {
 
     private final AnimalService animalService;
@@ -37,7 +40,7 @@ public class AnimalApiController {
 
     @Operation(summary = "Find animal by id", description = "Returns a single animal.")
     @ApiResponse(responseCode = "200", description = "Animal found")
-    @ApiResponse(responseCode = "404", description = "Animal not found")
+    @ApiResponse(responseCode = "404", description = "Animal not found", content = @Content)
     @GetMapping("/{id}")
     public ResponseEntity<AnimalResponse> findById(@PathVariable Long id) {
         return animalService.findById(id)
@@ -64,7 +67,7 @@ public class AnimalApiController {
      */
     @Operation(summary = "Create an animal", description = "Admin only. Adds a new animal to the shelter.")
     @ApiResponse(responseCode = "201", description = "Animal created")
-    @ApiResponse(responseCode = "400", description = "Validation failed")
+    @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AnimalResponse create(@RequestBody @Valid AnimalCreateRequest request) {
