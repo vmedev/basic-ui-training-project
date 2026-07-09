@@ -41,6 +41,13 @@ public class AnimalService {
                 .toList();
     }
 
+    public List<AnimalResponse> findAll(AnimalType type) {
+        return animalRepository.findAll().stream()
+                .filter(animal -> type == null || animal.getType() == type)
+                .map(this::toResponse)
+                .toList();
+    }
+
     /**
      * Returns a single animal by ID, or empty if not found.
      */

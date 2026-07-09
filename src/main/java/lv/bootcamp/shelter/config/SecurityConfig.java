@@ -100,8 +100,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET,
-                                "/", "/*.html", "/css/**", "/js/**", "/images/**", "/favicon.ico")
+                                "/", "/login", "/*.html", "/css/**", "/js/**", "/images/**", "/favicon.ico")
                         .permitAll()
+
                         .requestMatchers(HttpMethod.GET, "/api/animals/adopted").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/animals/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/animals/new").hasRole("ADMIN")
@@ -109,9 +110,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/animals/*/adopt").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/animals").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/animals").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/animals", true)
+                        .permitAll()
+                )
                 .httpBasic(Customizer.withDefaults())
                 .logout(Customizer.withDefaults());
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shelter — Sign in</title>
+    <style>
+        body { font-family: sans-serif; max-width: 420px; margin: 4rem auto; padding: 0 1rem; }
+        h1 { border-bottom: 2px solid #333; padding-bottom: 0.4rem; }
+        form { display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+        label { font-weight: bold; }
+        input { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        button { padding: 0.6rem 1.2rem; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1d4ed8; }
+        .error { background: #fee2e2; color: #b91c1c; padding: 0.6rem 1rem; border-radius: 6px; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Welcome back to the Shelter</h1>
+    <p>Sign in to adopt an animal or manage the shelter.</p>
+
+    <p th:if="${param.error}" class="error" role="alert">Invalid username or password</p>
+
+    <form th:action="@{/login}" method="post">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required>
+
+        <button type="submit">Sign in</button>
+    </form>
+</main>
+</body>
+</html>
