@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${animal.name}">Animal</title>
+    <style>
+        body { font-family: sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+        nav { background: #f1f5f9; padding: 0.6rem 1rem; border-radius: 6px; margin-bottom: 1.5rem; }
+        nav a { margin-right: 1rem; text-decoration: none; color: #2563eb; }
+        h1 { border-bottom: 2px solid #333; padding-bottom: 0.4rem; }
+        img { border-radius: 4px; }
+        dt { font-weight: bold; margin-top: 0.5rem; }
+        .back-link { display: inline-block; margin-top: 1rem; color: #2563eb; }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+<main>
+    <h1 th:text="${animal.name}">Name</h1>
+    <img th:src="${animal.imageUrl}" th:alt="'Photo of ' + ${animal.name}"
+         width="300" height="200" style="object-fit: cover;">
+    <dl>
+        <dt>Type</dt><dd th:text="${animal.type}">Type</dd>
+        <dt>Breed</dt><dd th:text="${animal.breed}">Breed</dd>
+        <dt>Age</dt><dd th:text="${animal.age}">0</dd>
+        <dt>Status</dt><dd th:text="${animal.status}">Status</dd>
+        <dt>Description</dt><dd th:text="${animal.description}">Description</dd>
+    </dl>
+    <a th:href="@{/animals}" class="back-link">← Back to list</a>
+</main>
+</body>
+</html>
